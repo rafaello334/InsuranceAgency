@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane  id="employees-pane" prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<Button id="add-employee-button" fx:id="addEmployeeButton" layoutX="85.0" layoutY="74.0" mnemonicParsing="false" prefHeight="230.0" prefWidth="280.0" stylesheets="@style.css" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="90.0" />
+		<Button id="modify-employee-button" fx:id="modifyEmployeeButton" layoutX="50.0" layoutY="329.0" mnemonicParsing="false" prefHeight="230.0" prefWidth="280.0" stylesheets="@style.css" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="50.0" />
+		<Button id="check-employee-button" fx:id="checkEmployeeButton" layoutX="433.0" layoutY="329.0" mnemonicParsing="false" prefHeight="230.0" prefWidth="280.0" stylesheets="@style.css" AnchorPane.bottomAnchor="28.0" AnchorPane.rightAnchor="50.0" />
+		<Button id="delete-employee-button" fx:id="deleteEmployeeButton" layoutX="470.0" layoutY="70.0" mnemonicParsing="false" prefHeight="230.0" prefWidth="280.0" stylesheets="@style.css" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="90.0" />
+		<Label layoutX="167.0" layoutY="14.0" text="Zarządzanie pracownikami" textAlignment="CENTER">
+			<font>
+				<Font size="40.0" />
+			</font>
+		</Label>
+
+	</children>
+</AnchorPane>

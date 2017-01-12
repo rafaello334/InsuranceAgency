@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="login-background" prefHeight="600.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.agencja.client.controller.LoginPaneController">
+	<children>
+		<Button id="login-button" fx:id="loginButton" layoutX="229.0" layoutY="409.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="143.0" text="Zaloguj" />
+		<TextField fx:id="loginTextField" layoutX="207.0" layoutY="293.0" promptText="Login" />
+		<PasswordField fx:id="passwordTextField" layoutX="207.0" layoutY="350.0" promptText="Hasło" />
+		<ImageView id="main-logo-view" fx:id="mainLogoView" fitHeight="211.0" fitWidth="620.0" nodeOrientation="INHERIT" pickOnBounds="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-20.0">
+			<cursor>
+				<Cursor fx:constant="DEFAULT" />
+			</cursor>
+			<image>
+				<Image url="@../../resources/logo.jpg" />
+			</image>
+		</ImageView>
+	</children>
+</AnchorPane>

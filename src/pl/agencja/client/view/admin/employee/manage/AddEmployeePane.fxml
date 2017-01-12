@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<Button id="back-button" fx:id="backAddEmployeeButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+		<TextField fx:id="firstNameTextField" layoutX="376.0" layoutY="130.0" promptText="Imię" />
+		<TextField fx:id="lastNameTextField" layoutX="376.0" layoutY="170.0" promptText="Nazwisko" />
+		<TextField fx:id="ageTextField" layoutX="376.0" layoutY="214.0" promptText="Wiek" />
+		<TextField fx:id="emailAdressTextField" layoutX="376.0" layoutY="259.0" promptText="Adres e-mail" />
+		<Button fx:id="acceptButton" layoutX="406.0" layoutY="379.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="127.0" text="Dodaj" />
+		<Label fx:id="errorAgeLabel" layoutX="601.0" layoutY="219.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+		<Label fx:id="errorEmailAddressLabel" layoutX="601.0" layoutY="264.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+		<Label fx:id="errorFirstNameLabel" layoutX="601.0" layoutY="135.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+		<Label fx:id="errorLastNameLabel" layoutX="601.0" layoutY="175.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+		<Label fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="245.0" layoutY="27.0" prefHeight="75.0" prefWidth="449.0" text="Dodawanie pracownika" textAlignment="CENTER">
+			<font>
+				<Font name="System Bold" size="40.0" />
+			</font>
+		</Label>
+		<DatePicker fx:id="birthDatePicker" layoutX="376.0" layoutY="314.0" promptText="Data urodzenia" />
+		<Label fx:id="errorBirthDateLabel" layoutX="601.0" layoutY="319.0" prefHeight="21.0" prefWidth="171.0" textFill="RED" />
+		<TextField fx:id="userNameTextField" layoutX="152.0" layoutY="130.0" promptText="Nazwa użytkownika" />
+		<Label fx:id="errorRepeatPasswordLabel" layoutX="14.0" layoutY="219.0" prefHeight="21.0" prefWidth="127.0" textFill="RED" />
+		<PasswordField fx:id="repeatPasswordField" layoutX="152.0" layoutY="214.0" promptText="Powtórz hasło" />
+		<PasswordField fx:id="passwordField" layoutX="152.0" layoutY="170.0" promptText="Hasło" />
+		<Label fx:id="errorUserNameLabel" layoutX="14.0" layoutY="135.0" prefHeight="21.0" prefWidth="127.0" textFill="RED" />
+		<Label fx:id="errorPasswordLabel" layoutX="14.0" layoutY="175.0" prefHeight="21.0" prefWidth="127.0" textFill="RED" />
+      <CheckBox fx:id="isAdminCheckBox" layoutX="152.0"
+	layoutY="275.0" mnemonicParsing="false" text="Prawa administratorskie" />
+	</children>
+</AnchorPane>

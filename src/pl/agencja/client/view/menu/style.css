@@ -1,0 +1,143 @@
+/*Graphics for MainMenu */
+#new-policy-button:selected
+{
+	-fx-background-color: darkgrey;
+	-fx-font-weight: bold;
+}
+#new-policy-button:hover
+{
+	-fx-background-color: lightgrey;
+	-fx-font-weight: bold;
+}
+
+
+#manage-clients-button:selected
+{
+	-fx-background-color: darkgrey;
+	-fx-font-weight: bold;
+}
+#manage-clients-button:hover
+{
+	-fx-background-color: lightgrey;
+	-fx-font-weight: bold;
+}
+
+
+#manage-employees-button:selected
+{
+	-fx-background-color: darkgrey;
+	-fx-font-weight: bold;
+}
+#manage-employees-button:hover
+{
+	-fx-background-color: lightgrey;
+	-fx-font-weight: bold;
+}
+
+
+#change-password-button:selected
+{
+	-fx-background-color: darkgrey;
+	-fx-font-weight: bold;
+}
+
+#change-password-button:hover
+{
+	-fx-background-color: lightgrey;
+	-fx-font-weight: bold;
+}
+
+#logout-button:hover
+{
+	-fx-background-color: darkgrey;
+	-fx-font-weight: bold;
+}
+
+/*Graphics for ChangePasswordPane */
+#change-password-pane
+{
+	-fx-background-image: url("/pl/agencja/client/resources/changePasswordBackground.jpg");
+	
+}
+/*Graphics for PolicyPane */
+
+#policy-pane
+{
+ 	-fx-background-image: url("/pl/agencja/client/resources/newPolicyBackground.jpg");
+}
+#oc-policy-button
+{
+	-fx-background-image: url("/pl/agencja/client/resources/ocpolicy.jpg");
+
+}
+
+#ac-policy-button
+{
+	-fx-background-image: url("/pl/agencja/client/resources/acpolicy.jpg");
+
+}
+
+#life-policy-button
+{
+	-fx-background-image: url("/pl/agencja/client/resources/lifepolicy.jpg");
+
+}
+
+#travel-policy-button
+{
+	-fx-background-image: url("/pl/agencja/client/resources/travelpolicy.jpg");
+
+}
+
+/* Graphics for ClientsPane */
+#clients-pane
+{
+	-fx-background-image: url("/pl/agencja/client/resources/clientsBackground.jpg");
+}
+#add-client-button
+{
+	-fx-background-image: url("/pl/agencja/client/resources/add.png");
+	-fx-background-color: transparent;
+}
+
+#modify-client-button
+{
+	-fx-background-image: url("/pl/agencja/client/resources/modify.png");
+	-fx-background-color: transparent;
+}
+
+#check-client-button
+{
+	-fx-background-image: url("/pl/agencja/client/resources/check.png");
+	-fx-background-color: transparent;
+}
+
+
+/* Graphics for EmployeesPane */
+#employees-pane
+{
+	-fx-background-image: url("/pl/agencja/client/resources/employeesBackground.jpg");
+}
+#add-employee-button
+{
+	-fx-background-image: url("/pl/agencja/client/resources/add.png");
+	-fx-background-color: transparent;
+}
+
+#modify-employee-button
+{
+	-fx-background-image: url("/pl/agencja/client/resources/modify.png");
+	-fx-background-color: transparent;
+}
+
+#check-employee-button
+{
+	-fx-background-image: url("/pl/agencja/client/resources/check.png");
+	-fx-background-color: transparent;
+}
+
+#delete-employee-button
+{
+	-fx-background-image: url("/pl/agencja/client/resources/delete.png");
+	-fx-background-color: transparent;
+}

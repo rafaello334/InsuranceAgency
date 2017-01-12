@@ -1,0 +1,17 @@
+#login-background
+{
+	-fx-background-image: url("/pl/agencja/client/resources/loginPaneBackground.jpg");
+}
+
+#login-button
+{
+	-fx-background-color: lightgrey;
+
+}
+
+
+#login-button:hover
+{
+	-fx-background-color: darkgrey;
+	-fx-font-weight: bold;
+}

@@ -1,0 +1,5 @@
+#back-button
+{
+	-fx-background-image: url("/pl/agencja/client/resources/back.png");
+	-fx-background-color: transparent;
+}

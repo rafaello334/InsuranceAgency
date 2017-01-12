@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane pickOnBounds="false" prefHeight="630.0" prefWidth="748.0" snapToPixel="false" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.agencja.client.controller.AdminMenuPaneController">
+	<children>
+		<HBox prefHeight="53.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+			<children>
+				<ToggleButton id="new-policy-button" fx:id="newPolicyToggleButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Nowa polisa" HBox.hgrow="ALWAYS" />
+				<ToggleButton id="manage-clients-button" fx:id="manageClientsToggleButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="53.0" prefWidth="120.0" text="Zarządzanie klientami" HBox.hgrow="ALWAYS" />
+				<ToggleButton id="manage-employees-button" fx:id="manageEmployeesToggleButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="53.0" prefWidth="139.0" text="Zarządzanie pracownikami" HBox.hgrow="ALWAYS" />
+				<ToggleButton id="change-password-button" fx:id="changePasswordToggleButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="53.0" prefWidth="74.0" text="Zmiana hasła" HBox.hgrow="ALWAYS" />
+				<Button id="logout-button" fx:id="logoutButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="53.0" prefWidth="81.0" text="Wyloguj" />
+			</children>
+		</HBox>
+		<Pane id="welcome-pane" fx:id="contentPane" layoutY="53.0" prefHeight="600.0" prefWidth="800.0">
+         <children>
+            <ImageView  fitHeight="613.0" fitWidth="817.0"  pickOnBounds="true">
+               <image>
+                  <Image url="@../../resources/powitanie.jpeg" />
+               </image>
+            </ImageView>
+         </children>
+		</Pane>
+	</children>
+</AnchorPane>
