@@ -2,8 +2,8 @@ package pl.agencja.client.model.users;
 
 public class Admin
 {
-	private static String login = "123";
-	private static String password = "123";
+	private static String login = "admin";
+	private static String password = "admin";
 
 	public static String getLogin()
 	{

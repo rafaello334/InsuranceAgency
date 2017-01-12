@@ -63,9 +63,9 @@ public class Customer
 		this.lastName = lastName;
 	}
 
-	public StringProperty getLastName()
+	public String getLastName()
 	{
-		return lastName;
+		return lastName.get();
 	}
 
 	public int getAge()
