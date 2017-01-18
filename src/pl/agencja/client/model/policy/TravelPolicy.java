@@ -1,62 +1,78 @@
 package pl.agencja.client.model.policy;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-import pl.agencja.client.model.customer.Customer;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "TRAVELPOLICY")
 public class TravelPolicy
 {
-	private Customer customer;
-	private String countryName;
-	private Date startPolicyDate;
-	private Date finishPolicyDate;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "TRAVELPOLICYID", nullable = false)
+	private int idTravelPolicy;
 
-	public Customer getCustomer()
+	@Column(name = "PRICE", nullable = false)
+	private double price;
+
+	@Column(name = "DESTINATION", nullable = false)
+	private String destination;
+
+	@Column(name = "STARTPOLICY", nullable = false)
+	private LocalDate startPolicyDate;
+
+	@Column(name = "FINISHPOLICY", nullable = false)
+	private LocalDate finishPolicyDate;
+
+	public int getIdTravelPolicy()
 	{
-		return customer;
+		return idTravelPolicy;
 	}
 
-	public void setCustomer(Customer customer)
-	{
-		this.customer = customer;
-	}
-
-	public String getCountryName()
-	{
-		return countryName;
-	}
-
-	public void setCountryName(String countryName)
-	{
-		this.countryName = countryName;
-	}
-
-	public Date getStartPolicyDate()
+	public LocalDate getStartPolicyDate()
 	{
 		return startPolicyDate;
 	}
 
-	public void setStartPolicyDate(Date startPolicyDate)
+	public void setStartPolicyDate(LocalDate startPolicyDate)
 	{
 		this.startPolicyDate = startPolicyDate;
 	}
 
-	public Date getFinishPolicyDate()
+	public LocalDate getFinishPolicyDate()
 	{
 		return finishPolicyDate;
 	}
 
-	public void setFinishPolicyDate(Date finishPolicyDate)
+	public void setFinishPolicyDate(LocalDate finishPolicyDate)
 	{
 		this.finishPolicyDate = finishPolicyDate;
 	}
 
-	public TravelPolicy(Customer customer, String countryName, Date startPolicyDate, Date finishPolicyDate)
+	public String getDestination()
 	{
-		this.customer = customer;
-		this.countryName = countryName;
-		this.startPolicyDate = startPolicyDate;
-		this.finishPolicyDate = finishPolicyDate;
+		return destination;
+	}
+
+	public void setDestination(String destination)
+	{
+		this.destination = destination;
+	}
+
+	public double getPrice()
+	{
+		return price;
+	}
+
+	public void setPrice(double price)
+	{
+		this.price = price;
 	}
 
 }

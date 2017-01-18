@@ -1,7 +1,7 @@
 package pl.agencja.client.controller;
 
-import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
@@ -23,8 +23,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import pl.agencja.client.database.HibernateUtil;
 import pl.agencja.client.model.customer.Employee;
-import pl.agencja.client.model.customer.EmployeeCollection;
 import pl.agencja.client.model.users.Admin;
 
 public class LoginPaneController implements Initializable
@@ -41,6 +41,7 @@ public class LoginPaneController implements Initializable
 	@FXML
 	private TextField loginTextField;
 
+	ArrayList<Employee> employeeList;
 	Stage prevStage;
 	AdminMenuPaneController adminMenuPaneController;
 	EmployeeMenuPaneController employeeMenuPaneController;
@@ -127,9 +128,14 @@ public class LoginPaneController implements Initializable
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private boolean checkEmployeeLoginAndPassword()
 	{
-		for (Employee employee : EmployeeCollection.getEmployeeList())
+		HibernateUtil.entityManager.getTransaction().begin();
+		employeeList = (ArrayList<Employee>) HibernateUtil.entityManager.createQuery("from Employee").getResultList();
+		HibernateUtil.entityManager.getTransaction().commit();
+
+		for (Employee employee : employeeList)
 		{
 			if ((employee.getUserName().equals(loginTextField.getText())
 					&& employee.getPassword().equals(passwordTextField.getText()) && employee.isAdmin()))

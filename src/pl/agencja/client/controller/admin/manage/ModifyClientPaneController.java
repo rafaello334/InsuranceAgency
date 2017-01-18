@@ -1,8 +1,8 @@
 package pl.agencja.client.controller.admin.manage;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.time.LocalDate;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -15,12 +15,13 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import pl.agencja.client.controller.ClientsPaneController;
+import pl.agencja.client.database.HibernateUtil;
 import pl.agencja.client.model.customer.Customer;
-import pl.agencja.client.model.customer.CustomersCollection;
 
 public class ModifyClientPaneController implements Initializable
 {
@@ -46,19 +47,13 @@ public class ModifyClientPaneController implements Initializable
 	private SplitMenuButton countrySplitMenuButton;
 
 	@FXML
-	private Label errorAgeLabel;
-
-	@FXML
 	private TextField firstNameTextField;
 
 	@FXML
 	private Label lastNameCheckLabel;
 
 	@FXML
-	private TextField ageTextField;
-
-	@FXML
-	private TextField checkLastNameTextField;
+	private TextField checkIdTextField;
 
 	@FXML
 	private Label errorCountryLabel;
@@ -88,10 +83,9 @@ public class ModifyClientPaneController implements Initializable
 	private Pane contentPane;
 
 	ClientsPaneController clientsPaneController;
-	Customer customer;
+	Customer existingCustomer;
 
 	boolean modifyClient;
-	boolean ageCorrect;
 	boolean firstNameCorrect;
 	boolean lastNameCorrect;
 	boolean addressCorrect;
@@ -111,6 +105,21 @@ public class ModifyClientPaneController implements Initializable
 
 	private void configureButtons()
 	{
+		String[] locales = Locale.getISOCountries();
+		for (String countryCode : locales)
+		{
+			Locale country = new Locale("", countryCode);
+			countrySplitMenuButton.getItems().add(new MenuItem(country.getDisplayName()));
+		}
+
+		for (MenuItem item : countrySplitMenuButton.getItems())
+		{
+			item.setOnAction((event) -> {
+
+				countrySplitMenuButton.setText(item.getText());
+			});
+		}
+
 		backModifyClientButton.setOnAction(new EventHandler<ActionEvent>()
 		{
 
@@ -140,47 +149,50 @@ public class ModifyClientPaneController implements Initializable
 			@Override
 			public void handle(ActionEvent event)
 			{
-				Iterator<Customer> iterator = CustomersCollection.getCustomerList().iterator();
-
-				if (iterator.hasNext())
+				int klucz;
+				existingCustomer = null;
+				if (!checkIdTextField.getText().isEmpty())
 				{
-					while (iterator.hasNext())
+					if (!isNumeric(checkIdTextField.getText()))
 					{
-						Customer customer = iterator.next();
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("B³¹d ID!");
+						alert.setHeaderText(null);
+						alert.setContentText("ID sk³ada siê tylko z cyfr.\nSpróbuj ponownie");
+						alert.showAndWait();
 
-						if (checkLastNameTextField.getText().equals(customer.getLastName()))
-						{
-							setData(customer);
-
-							Alert alert = new Alert(AlertType.INFORMATION);
-							alert.setTitle("Wybrano pracownika!");
-							alert.setHeaderText(null);
-							alert.setContentText(
-									"Pracownik: " + checkLastNameTextField.getText() + " zosta³ wybrany do edycji!");
-							alert.showAndWait();
-						} else if (checkLastNameTextField.getText().equals(""))
-						{
-							Alert alert = new Alert(AlertType.INFORMATION);
-							alert.setTitle("B³êdne dane!");
-							alert.setHeaderText(null);
-							alert.setContentText("WprowadŸ dane do formularza!");
-							alert.showAndWait();
-						} else
-						{
-							setEmptyData();
-							Alert alert = new Alert(AlertType.INFORMATION);
-							alert.setTitle("Brak pracownika!");
-							alert.setHeaderText(null);
-							alert.setContentText("Pracownik: " + checkLastNameTextField.getText() + " nie istnieje!");
-							alert.showAndWait();
-						}
+					} else
+					{
+						klucz = Integer.parseInt(checkIdTextField.getText());
+						HibernateUtil.entityManager.getTransaction().begin();
+						existingCustomer = HibernateUtil.entityManager.find(Customer.class, klucz);
+						HibernateUtil.entityManager.getTransaction().commit();
 					}
-				} else
+				}
+				if (existingCustomer != null)
+				{
+					setData(existingCustomer);
+
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Wybrano pracownika!");
+					alert.setHeaderText(null);
+					alert.setContentText("Klient: " + checkIdTextField.getText() + " zosta³ wybrany do edycji!");
+					alert.showAndWait();
+				} else if (checkIdTextField.getText().equals(""))
 				{
 					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Baza danych jest pusta!");
+					alert.setTitle("B³êdne dane!");
 					alert.setHeaderText(null);
-					alert.setContentText("Baza danych jest pusta!");
+					alert.setContentText("Podaj id klienta!");
+					alert.showAndWait();
+
+				} else 
+				{
+					setEmptyData();
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Brak pracownika!");
+					alert.setHeaderText(null);
+					alert.setContentText("Klient: " + checkIdTextField.getText() + " nie istnieje!");
 					alert.showAndWait();
 				}
 
@@ -193,22 +205,12 @@ public class ModifyClientPaneController implements Initializable
 			@Override
 			public void handle(ActionEvent event)
 			{
-				ageCorrect = false;
+
 				phoneCorrect = false;
 				modifyClient = false;
 				firstNameCorrect = false;
 				lastNameCorrect = false;
-				if (isNumeric(ageTextField.getText()))
-				{
-					ageCorrect = true;
-					errorAgeLabel.setText("");
-				} else if (ageTextField.getText().equals(""))
-				{
-					errorAgeLabel.setText("Podaj wiek!");
-				} else
-				{
-					errorAgeLabel.setText("Nieprawid³owa wartoœæ");
-				}
+
 				if (isNumeric(phoneNumberTextField.getText()))
 				{
 					phoneCorrect = true;
@@ -270,23 +272,35 @@ public class ModifyClientPaneController implements Initializable
 					errorBirthDateLabel.setText("");
 				}
 
-				if (ageCorrect && phoneCorrect && countryCorrect && firstNameCorrect && lastNameCorrect)
+				if (phoneCorrect && countryCorrect && firstNameCorrect && lastNameCorrect)
 					modifyClient = true;
 
 				if (modifyClient && (!firstNameTextField.getText().isEmpty() && !lastNameTextField.getText().isEmpty()
-						&& !ageTextField.getText().isEmpty() && !adressTextField.getText().isEmpty()
-						&& birthDatePicker.getValue() != null && !phoneNumberTextField.getText().isEmpty()
-						&& !countrySplitMenuButton.getText().isEmpty()))
+						&& !adressTextField.getText().isEmpty() && birthDatePicker.getValue() != null
+						&& !phoneNumberTextField.getText().isEmpty() && !countrySplitMenuButton.getText().isEmpty())
+						&& existingCustomer != null)
 				{
-					modifyEmployee(checkLastNameTextField.getText());
+					HibernateUtil.entityManager.getTransaction().begin();
+					existingCustomer.setFirstName(firstNameTextField.getText());
+					existingCustomer.setLastName(lastNameTextField.getText());
+					existingCustomer.setCountry(countrySplitMenuButton.getText());
+					existingCustomer.setAddress(adressTextField.getText());
+					existingCustomer.setPhoneNumber(Long.parseLong(phoneNumberTextField.getText()));
+					existingCustomer.setBirthDate(birthDatePicker.getValue());
+					existingCustomer.setJoinDate(LocalDate.now());
+					HibernateUtil.entityManager.getTransaction().commit();
 
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Wykonano");
+					alert.setHeaderText(null);
+					alert.setContentText("Edycja klienta przebieg³a pomyœlnie");
+					alert.showAndWait();
 					setEmptyData();
 
 				} else
 				{
-					System.out.println(modifyClient);
 					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("B³¹d dodawania");
+					alert.setTitle("B³¹d edycji");
 					alert.setHeaderText(null);
 					alert.setContentText("B³¹d edycji. \nPopraw dane w formularzu!");
 					alert.showAndWait();
@@ -295,53 +309,6 @@ public class ModifyClientPaneController implements Initializable
 			}
 
 		});
-	}
-
-	private void modifyEmployee(String lastName)
-	{
-		ArrayList<Customer> arrayList = new ArrayList<>();
-
-		for (Customer employee : CustomersCollection.getCustomerList())
-		{
-			arrayList.add(employee);
-		}
-
-		Iterator<Customer> iterator = arrayList.iterator();
-
-		if (iterator.hasNext())
-		{
-			while (iterator.hasNext())
-			{
-				Customer customer = iterator.next();
-
-				if (lastName.equals(customer.getLastName()))
-				{
-					CustomersCollection.getCustomerList().remove(customer);
-					CustomersCollection.getCustomerList()
-							.add(new Customer(firstNameTextField.getText(), lastNameTextField.getText(),
-									Integer.parseInt(ageTextField.getText()), countrySplitMenuButton.getText(),
-									adressTextField.getText(), Long.parseLong(phoneNumberTextField.getText()),
-									birthDatePicker.getValue()));
-
-				} else
-				{
-					setEmptyData();
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Nie mo¿na zmodyfikowaæ!");
-					alert.setHeaderText(null);
-					alert.setContentText("Pracownik: " + lastName + " nie istnieje w bazie danych");
-					alert.showAndWait();
-				}
-			}
-		} else
-		{
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Baza danych jest pusta!");
-			alert.setHeaderText(null);
-			alert.setContentText("Baza danych jest pusta!");
-			alert.showAndWait();
-		}
-
 	}
 
 	private static boolean isNumeric(String str)
@@ -358,9 +325,9 @@ public class ModifyClientPaneController implements Initializable
 
 	private void setData(Customer customer)
 	{
+
 		firstNameTextField.setText(customer.getFirstName());
 		lastNameTextField.setText(customer.getLastName());
-		ageTextField.setText(String.valueOf(customer.getAge()));
 		countrySplitMenuButton.setText(customer.getCountry());
 		adressTextField.setText(customer.getAddress());
 		phoneNumberTextField.setText(String.valueOf(customer.getPhoneNumber()));
@@ -371,7 +338,6 @@ public class ModifyClientPaneController implements Initializable
 	{
 		firstNameTextField.setText("");
 		lastNameTextField.setText("");
-		ageTextField.setText("");
 		countrySplitMenuButton.setText("");
 		adressTextField.setText("");
 		birthDatePicker.setValue(null);

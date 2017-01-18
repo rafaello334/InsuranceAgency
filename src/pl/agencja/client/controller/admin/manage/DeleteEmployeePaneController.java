@@ -2,8 +2,10 @@ package pl.agencja.client.controller.admin.manage;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ResourceBundle;
+
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,8 +20,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import pl.agencja.client.controller.EmployeesPaneController;
+import pl.agencja.client.database.HibernateUtil;
 import pl.agencja.client.model.customer.Employee;
-import pl.agencja.client.model.customer.EmployeeCollection;
 
 public class DeleteEmployeePaneController implements Initializable
 {
@@ -47,6 +49,7 @@ public class DeleteEmployeePaneController implements Initializable
 	@FXML
 	private Pane contentPane;
 
+	Employee employeeToRemove;
 	EmployeesPaneController employeesPaneController;
 
 	boolean deleteClient;
@@ -150,47 +153,34 @@ public class DeleteEmployeePaneController implements Initializable
 
 			private void deleteEmployee(String firstName, String lastName)
 			{
-				ArrayList<Employee> arrayList = new ArrayList<>();
-				
-				for(Employee employee : EmployeeCollection.getEmployeeList())
+				try
 				{
-					arrayList.add(employee);
-				}
-				
-				Iterator<Employee> iterator = arrayList.iterator();
+					HibernateUtil.entityManager.getTransaction().begin();
+					@SuppressWarnings("unchecked")
+					TypedQuery<Employee> query = HibernateUtil.entityManager.createQuery(
+							"SELECT e from Employee e WHERE e.firstName = :firstName and e.lastName = :lastName",
+							Employee.class);
+					query.setParameter("lastName", lastName);
+					query.setParameter("firstName", firstName);
 
-				if (iterator.hasNext())
-				{
-					while (iterator.hasNext())
-					{
-						Employee employee = iterator.next();
+					employeeToRemove = query.getSingleResult();
+					HibernateUtil.entityManager.remove(employeeToRemove);
 
-						if (firstName.equals(employee.getFirstName()) && lastName.equals(employee.getLastName()))
-						{
-							EmployeeCollection.getEmployeeList().remove(employee);
-
-							Alert alert = new Alert(AlertType.INFORMATION);
-							alert.setTitle("Usuniêto!");
-							alert.setHeaderText(null);
-							alert.setContentText("Pracownik: " + firstName + " " + lastName + " zosta³ usuniêty!");
-							alert.showAndWait();
-						} else
-						{
-							Alert alert = new Alert(AlertType.INFORMATION);
-							alert.setTitle("Usuniêto!");
-							alert.setHeaderText(null);
-							alert.setContentText(
-									"Pracownik: " + firstName + " " + lastName + " nie istnieje w bazie danych");
-							alert.showAndWait();
-						}
-					}
-				} else
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Usuniêto!");
+					alert.setHeaderText(null);
+					alert.setContentText("Pracownik: " + firstName + " " + lastName + " zosta³ usuniêty!");
+					alert.showAndWait();
+				} catch (NoResultException nre)
 				{
 					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Baza danych jest pusta!");
+					alert.setTitle("Nie mo¿na usun¹æ!");
 					alert.setHeaderText(null);
-					alert.setContentText("Baza danych jest pusta!");
+					alert.setContentText("Brak pracownika o podanym imieniu i nazwisku");
 					alert.showAndWait();
+				} finally
+				{
+					HibernateUtil.entityManager.getTransaction().commit();
 				}
 
 			}

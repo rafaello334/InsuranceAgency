@@ -6,52 +6,28 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css"
-	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<Button id="back-button" fx:id="backModifyClientButton"
-			layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="100.0"
-			prefWidth="100.0" />
-		<TextField fx:id="checkLastNameTextField" layoutX="102.0"
-			layoutY="130.0" promptText="Nazwisko" />
-		<Button fx:id="checkLastNameButton" layoutX="146.0" layoutY="187.0"
-			mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0" text="Wybierz" />
-		<TextField fx:id="firstNameTextField" layoutX="376.0"
-			layoutY="130.0" promptText="Imię" />
-		<TextField fx:id="lastNameTextField" layoutX="376.0"
-			layoutY="170.0" promptText="Nazwisko" />
-		<TextField fx:id="ageTextField" layoutX="376.0" layoutY="214.0"
-			promptText="Wiek" />
-		<SplitMenuButton fx:id="countrySplitMenuButton"
-			layoutX="376.0" layoutY="259.0" mnemonicParsing="false" prefHeight="31.0"
-			prefWidth="187.0" text="Kraj" />
-		<TextField fx:id="adressTextField" layoutX="376.0" layoutY="311.0"
-			promptText="Adres zamieszkania" />
-		<TextField fx:id="phoneNumberTextField" layoutX="377.0"
-			layoutY="359.0" promptText="Numer telefonu" />
-		<DatePicker fx:id="birthDatePicker" layoutX="376.0"
-			layoutY="408.0" promptText="Data urodzenia" />
-		<Button fx:id="acceptButton" layoutX="400.0" layoutY="459.0"
-			mnemonicParsing="false" prefHeight="75.0" prefWidth="127.0" text="Edytuj" />
-		<Label fx:id="errorAgeLabel" layoutX="601.0" layoutY="219.0"
-			prefHeight="21.0" prefWidth="187.0" textFill="RED" />
-		<Label fx:id="errorFirstNameLabel" layoutX="601.0" layoutY="135.0"
-			prefHeight="21.0" prefWidth="187.0" textFill="RED" />
-		<Label fx:id="errorLastNameLabel" layoutX="601.0" layoutY="175.0"
-			prefHeight="21.0" prefWidth="187.0" textFill="RED" />
-		<Label fx:id="nameLabel" layoutX="247.0" layoutY="35.0"
-			text="Edytowanie klienta">
+		<Button id="back-button" fx:id="backModifyClientButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+		<TextField fx:id="checkIdTextField" layoutX="102.0" layoutY="130.0" promptText="Nazwisko" />
+		<Button fx:id="checkLastNameButton" layoutX="146.0" layoutY="187.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0" text="Wybierz" />
+		<TextField fx:id="firstNameTextField" layoutX="376.0" layoutY="130.0" promptText="Imię" />
+		<TextField fx:id="lastNameTextField" layoutX="376.0" layoutY="170.0" promptText="Nazwisko" />
+		<SplitMenuButton fx:id="countrySplitMenuButton" layoutX="376.0" layoutY="214.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="187.0" text="Kraj" />
+		<TextField fx:id="adressTextField" layoutX="376.0" layoutY="259.0" promptText="Adres zamieszkania" />
+		<TextField fx:id="phoneNumberTextField" layoutX="376.0" layoutY="301.0" promptText="Numer telefonu" />
+		<DatePicker fx:id="birthDatePicker" layoutX="376.0" layoutY="349.0" promptText="Data urodzenia" />
+		<Button fx:id="acceptButton" layoutX="400.0" layoutY="459.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="127.0" text="Edytuj" />
+		<Label fx:id="nameLabel" layoutX="247.0" layoutY="35.0" text="Edytowanie klienta">
 			<font>
 				<Font name="System Bold" size="40.0" />
 			</font>
 		</Label>
-		<Label fx:id="errorBirthDateLabel" layoutX="601.0" layoutY="413.0"
-			prefHeight="21.0" prefWidth="171.0" textFill="RED" />
-		<Label fx:id="errorCountryLabel" layoutX="586.0" layoutY="264.0"
-			prefHeight="21.0" prefWidth="187.0" textFill="RED" />
-		<Label fx:id="errorAdressLabel" layoutX="586.0" layoutY="316.0"
-			prefHeight="21.0" prefWidth="187.0" textFill="RED" />
-		<Label fx:id="errorPhoneNumberLabel" layoutX="586.0" layoutY="364.0"
-			prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+		<Label fx:id="errorFirstNameLabel" layoutX="601.0" layoutY="135.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+		<Label fx:id="errorLastNameLabel" layoutX="601.0" layoutY="175.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+		<Label fx:id="errorBirthDateLabel" layoutX="609.0" layoutY="354.0" prefHeight="21.0" prefWidth="171.0" textFill="RED" />
+		<Label fx:id="errorCountryLabel" layoutX="586.0" layoutY="219.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+		<Label fx:id="errorAdressLabel" layoutX="586.0" layoutY="264.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+		<Label fx:id="errorPhoneNumberLabel" layoutX="601.0" layoutY="306.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
 	</children>
 </AnchorPane>

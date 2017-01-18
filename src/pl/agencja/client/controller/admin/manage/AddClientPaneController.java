@@ -1,6 +1,7 @@
 package pl.agencja.client.controller.admin.manage;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -19,16 +20,13 @@ import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import pl.agencja.client.controller.ClientsPaneController;
+import pl.agencja.client.database.HibernateUtil;
 import pl.agencja.client.model.customer.Customer;
-import pl.agencja.client.model.customer.CustomersCollection;
 
 public class AddClientPaneController implements Initializable
 {
 	@FXML
 	private Button backAddClientButton;
-
-	@FXML
-	private TextField ageTextField;
 
 	@FXML
 	private TextField firstNameTextField;
@@ -47,9 +45,6 @@ public class AddClientPaneController implements Initializable
 
 	@FXML
 	private TextField phoneNumberTextField;
-
-	@FXML
-	private Label errorAgeLabel;
 
 	@FXML
 	private Label errorPhoneNumberLabel;
@@ -81,7 +76,6 @@ public class AddClientPaneController implements Initializable
 	ClientsPaneController clientsPaneController;
 	Customer customer;
 	boolean addClient;
-	boolean ageCorrect;
 	boolean phoneCorrect;
 	boolean countryCorrect;
 	boolean firstNameCorrect;
@@ -124,22 +118,11 @@ public class AddClientPaneController implements Initializable
 			@Override
 			public void handle(ActionEvent event)
 			{
-				ageCorrect = false;
 				phoneCorrect = false;
 				addClient = false;
 				firstNameCorrect = false;
 				lastNameCorrect = false;
-				if (isNumeric(ageTextField.getText()))
-				{
-					ageCorrect = true;
-					errorAgeLabel.setText("");
-				} else if (ageTextField.getText().equals(""))
-				{
-					errorAgeLabel.setText("Podaj wiek!");
-				} else
-				{
-					errorAgeLabel.setText("Nieprawid³owa wartoœæ");
-				}
+
 				if (isNumeric(phoneNumberTextField.getText()))
 				{
 					phoneCorrect = true;
@@ -201,33 +184,36 @@ public class AddClientPaneController implements Initializable
 					errorBirthDateLabel.setText("");
 				}
 
-				if (ageCorrect && phoneCorrect && countryCorrect && firstNameCorrect && lastNameCorrect)
+				if (phoneCorrect && countryCorrect && firstNameCorrect && lastNameCorrect)
 					addClient = true;
 
 				if (addClient && (!firstNameTextField.getText().isEmpty() && !lastNameTextField.getText().isEmpty()
-						&& !ageTextField.getText().isEmpty() && !countrySplitMenuButton.getText().isEmpty()
-						&& !adressTextField.getText().isEmpty() && !phoneNumberTextField.getText().isEmpty()
-						&& !birthDatePicker.getValue().equals(null)))
+						&& !countrySplitMenuButton.getText().isEmpty() && !adressTextField.getText().isEmpty()
+						&& !phoneNumberTextField.getText().isEmpty() && !birthDatePicker.getValue().equals(null)))
 				{
-					customer = new Customer(firstNameTextField.getText(), lastNameTextField.getText(),
-							Integer.parseInt(ageTextField.getText()), countrySplitMenuButton.getText(),
-							adressTextField.getText(), Long.parseLong(phoneNumberTextField.getText()),
-							birthDatePicker.getValue());
-
+					
+					customer = new Customer();
+					customer.setFirstName(firstNameTextField.getText());
+					customer.setLastName(lastNameTextField.getText());
+					customer.setCountry(countrySplitMenuButton.getText());
+					customer.setAddress(adressTextField.getText());
+					customer.setPhoneNumber(Long.parseLong(phoneNumberTextField.getText()));
+					customer.setBirthDate(birthDatePicker.getValue());
+					customer.setJoinDate(LocalDate.now());
+					
+					HibernateUtil.entityManager.getTransaction().begin();
+					HibernateUtil.entityManager.persist(customer);
+					HibernateUtil.entityManager.getTransaction().commit();
+					
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Dodawanie u¿ytkownika");
 					alert.setHeaderText(null);
 					alert.setContentText("Dodanie u¿ytkownika zakoñczy³o siê sukcesem.\n");
 					alert.showAndWait();
 
-					CustomersCollection.addCustomer(customer);
-					System.out.println(customer);
-					
-					
 					firstNameTextField.setText("");
 					lastNameTextField.setText("");
-					ageTextField.setText("");
-					countrySplitMenuButton.setText("");
+					countrySplitMenuButton.setText("Kraj");
 					birthDatePicker.setValue(null);
 					adressTextField.setText("");
 					phoneNumberTextField.setText("");

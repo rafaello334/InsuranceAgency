@@ -112,7 +112,7 @@ public class ChangePasswordPaneController implements Initializable
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("B³ad zmiany has³a");
 				alert.setHeaderText(null);
-				alert.setContentText("Nie mo¿na zmieniæ has³a. \nPopraw dane w formularzu!");
+				alert.setContentText("Stare has³o jest nieprawid³owe. \nPopraw dane w formularzu!");
 				alert.showAndWait();
 			}
 		} catch (Exception e)

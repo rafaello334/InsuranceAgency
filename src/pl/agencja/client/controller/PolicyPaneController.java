@@ -17,7 +17,6 @@ import pl.agencja.client.controller.admin.manage.AddTravelPaneController;
 
 public class PolicyPaneController implements Initializable
 {
-
 	@FXML
 	private Button ocPolicyButton;
 
@@ -29,7 +28,7 @@ public class PolicyPaneController implements Initializable
 
 	@FXML
 	private Button lifePolicyButton;
-
+	
 	@FXML
 	private Pane contentPane;
 
@@ -138,5 +137,6 @@ public class PolicyPaneController implements Initializable
 				}
 			}
 		});
+
 	}
 }

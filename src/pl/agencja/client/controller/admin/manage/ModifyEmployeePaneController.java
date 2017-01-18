@@ -1,9 +1,11 @@
 package pl.agencja.client.controller.admin.manage;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
+
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,8 +21,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import pl.agencja.client.controller.EmployeesPaneController;
+import pl.agencja.client.database.HibernateUtil;
 import pl.agencja.client.model.customer.Employee;
-import pl.agencja.client.model.customer.EmployeeCollection;
 
 public class ModifyEmployeePaneController implements Initializable
 {
@@ -40,9 +42,6 @@ public class ModifyEmployeePaneController implements Initializable
 	private DatePicker birthDatePicker;
 
 	@FXML
-	private Label errorAgeLabel;
-
-	@FXML
 	private TextField firstNameTextField;
 
 	@FXML
@@ -50,9 +49,6 @@ public class ModifyEmployeePaneController implements Initializable
 
 	@FXML
 	private Label userNameCheckLabel;
-
-	@FXML
-	private TextField ageTextField;
 
 	@FXML
 	private TextField checkUserNameTextField;
@@ -82,9 +78,8 @@ public class ModifyEmployeePaneController implements Initializable
 	private Pane contentPane;
 
 	EmployeesPaneController employeesPaneController;
-	Employee employee;
+	Employee existingEmployee;
 	boolean modifyEmployee;
-	boolean ageCorrect;
 	boolean firstNameCorrect;
 	boolean lastNameCorrect;
 	boolean emailAddressCorrect;
@@ -134,51 +129,70 @@ public class ModifyEmployeePaneController implements Initializable
 			@Override
 			public void handle(ActionEvent event)
 			{
-				Iterator<Employee> iterator = EmployeeCollection.getEmployeeList().iterator();
-
-				if (iterator.hasNext())
+				int klucz;
+				existingEmployee = null;
+				if (!checkUserNameTextField.getText().isEmpty())
 				{
-					while (iterator.hasNext())
+					if (isNumeric(checkUserNameTextField.getText()))
 					{
-						Employee employee = iterator.next();
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("B³êdne nazwisko!");
+						alert.setHeaderText(null);
+						alert.setContentText("B³êdne nazwisko.\nSpróbuj ponownie");
+						alert.showAndWait();
 
-						if (checkUserNameTextField.getText().equals(employee.getUserName()))
-						{
-							setData(employee);
+					} else
+					{
+						userName = checkUserNameTextField.getText();
+						HibernateUtil.entityManager.getTransaction().begin();
+						TypedQuery<Employee> query = HibernateUtil.entityManager
+								.createQuery("SELECT e from Employee e WHERE e.userName = :userName", Employee.class);
+						query.setParameter("userName", userName);
 
-							Alert alert = new Alert(AlertType.INFORMATION);
-							alert.setTitle("Wybrano pracownika!");
-							alert.setHeaderText(null);
-							alert.setContentText(
-									"Pracownik: " + checkUserNameTextField.getText() + " zosta³ wybrany do edycji!");
-							alert.showAndWait();
-						} else if (checkUserNameTextField.getText().equals(""))
+						try
 						{
-							Alert alert = new Alert(AlertType.INFORMATION);
-							alert.setTitle("B³êdne dane!");
-							alert.setHeaderText(null);
-							alert.setContentText("WprowadŸ dane do formularza!");
-							alert.showAndWait();
-						} else
+							existingEmployee = query.getSingleResult();
+
+							klucz = existingEmployee.getIdEmployee();
+							existingEmployee = HibernateUtil.entityManager.find(Employee.class, klucz);
+
+						} catch (NoResultException nre)
 						{
-							setEmptyData();
 							Alert alert = new Alert(AlertType.INFORMATION);
 							alert.setTitle("Brak pracownika!");
 							alert.setHeaderText(null);
-							alert.setContentText("Pracownik: " + checkUserNameTextField.getText() + " nie istnieje!");
+							alert.setContentText(
+									"Pracownik o podanej nazwie u¿ytkownika nie istnieje.\nSpróbuj ponownie");
 							alert.showAndWait();
+						} finally
+						{
+							HibernateUtil.entityManager.getTransaction().commit();
+							
 						}
 					}
-				} else
+				}
+				if (existingEmployee != null)
+				{
+					setData(existingEmployee);
+
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Wybrano pracownika!");
+					alert.setHeaderText(null);
+					alert.setContentText(
+							"Pracownik: " + checkUserNameTextField.getText() + " zosta³ wybrany do edycji!");
+					alert.showAndWait();
+				} else if (checkUserNameTextField.getText().equals(""))
 				{
 					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Baza danych jest pusta!");
+					alert.setTitle("B³êdne dane!");
 					alert.setHeaderText(null);
-					alert.setContentText("Baza danych jest pusta!");
+					alert.setContentText("Podaj nazwê u¿ytkownika klienta!");
 					alert.showAndWait();
-				}
+
+				} 
 
 			}
+
 		});
 
 		acceptButton.setOnAction(new EventHandler<ActionEvent>()
@@ -187,23 +201,10 @@ public class ModifyEmployeePaneController implements Initializable
 			@Override
 			public void handle(ActionEvent event)
 			{
-				ageCorrect = false;
 				modifyEmployee = false;
 				firstNameCorrect = false;
 				lastNameCorrect = false;
 				emailAddressCorrect = false;
-
-				if (isNumeric(ageTextField.getText()))
-				{
-					ageCorrect = true;
-					errorAgeLabel.setText("");
-				} else if (ageTextField.getText().equals(""))
-				{
-					errorAgeLabel.setText("Podaj wiek!");
-				} else
-				{
-					errorAgeLabel.setText("Nieprawid³owa wartoœæ");
-				}
 
 				if (firstNameTextField.getText().equals(""))
 				{
@@ -246,20 +247,31 @@ public class ModifyEmployeePaneController implements Initializable
 					errorBirthDateLabel.setText("");
 				}
 
-				if (ageCorrect && firstNameCorrect && lastNameCorrect && emailAddressCorrect)
+				if (firstNameCorrect && lastNameCorrect && emailAddressCorrect)
 					modifyEmployee = true;
 
 				if (modifyEmployee && (!firstNameTextField.getText().isEmpty() && !lastNameTextField.getText().isEmpty()
-						&& !ageTextField.getText().isEmpty() && !emailAdressTextField.getText().isEmpty()
-						&& birthDatePicker.getValue() != null))
+						&& !emailAdressTextField.getText().isEmpty() && birthDatePicker.getValue() != null
+						&& existingEmployee != null))
 				{
-					modifyEmployee(checkUserNameTextField.getText());
+					HibernateUtil.entityManager.getTransaction().begin();
+					existingEmployee.setFirstName(firstNameTextField.getText());
+					existingEmployee.setLastName(lastNameTextField.getText());
+					existingEmployee.setEmailAddress(emailAdressTextField.getText());
+					existingEmployee.setBirthDate(birthDatePicker.getValue());
+					existingEmployee.setAdmin(isAdminCheckBox.isSelected());
+					existingEmployee.setJoinDate(LocalDate.now());
+					HibernateUtil.entityManager.getTransaction().commit();
 
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Wykonano");
+					alert.setHeaderText(null);
+					alert.setContentText("Edycja klienta przebieg³a pomyœlnie");
+					alert.showAndWait();
 					setEmptyData();
 
 				} else
 				{
-					System.out.println(modifyEmployee);
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("B³¹d dodawania");
 					alert.setHeaderText(null);
@@ -270,53 +282,6 @@ public class ModifyEmployeePaneController implements Initializable
 			}
 
 		});
-	}
-
-	private void modifyEmployee(String userName)
-	{
-		ArrayList<Employee> arrayList = new ArrayList<>();
-
-		for (Employee employee : EmployeeCollection.getEmployeeList())
-		{
-			arrayList.add(employee);
-		}
-
-		Iterator<Employee> iterator = arrayList.iterator();
-
-		if (iterator.hasNext())
-		{
-			while (iterator.hasNext())
-			{
-				Employee employee = iterator.next();
-
-				if (userName.equals(employee.getUserName()))
-				{
-					EmployeeCollection.getEmployeeList().remove(employee);
-					EmployeeCollection.getEmployeeList()
-							.add(new Employee(firstNameTextField.getText(), lastNameTextField.getText(),
-									Integer.parseInt(ageTextField.getText()), emailAdressTextField.getText(),
-									birthDatePicker.getValue(), this.userName, this.password,
-									isAdminCheckBox.isSelected()));
-
-				} else
-				{
-					setEmptyData();
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Nie mo¿na zmodyfikowaæ!");
-					alert.setHeaderText(null);
-					alert.setContentText("Pracownik: " + userName + " nie istnieje w bazie danych");
-					alert.showAndWait();
-				}
-			}
-		} else
-		{
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Baza danych jest pusta!");
-			alert.setHeaderText(null);
-			alert.setContentText("Baza danych jest pusta!");
-			alert.showAndWait();
-		}
-
 	}
 
 	private static boolean isNumeric(String str)
@@ -338,8 +303,7 @@ public class ModifyEmployeePaneController implements Initializable
 		isAdminCheckBox.setSelected(employee.isAdmin());
 		firstNameTextField.setText(employee.getFirstName());
 		lastNameTextField.setText(employee.getLastName());
-		ageTextField.setText(String.valueOf(employee.getAge()));
-		emailAdressTextField.setText(employee.getEmailAdress());
+		emailAdressTextField.setText(employee.getEmailAddress());
 		birthDatePicker.setValue(employee.getBirthDate());
 	}
 
@@ -350,7 +314,6 @@ public class ModifyEmployeePaneController implements Initializable
 		isAdminCheckBox.setSelected(false);
 		firstNameTextField.setText("");
 		lastNameTextField.setText("");
-		ageTextField.setText("");
 		emailAdressTextField.setText("");
 		birthDatePicker.setValue(null);
 	}

@@ -9,9 +9,9 @@
 
 <AnchorPane id="policy-pane" prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<Button id="oc-policy-button" fx:id="ocPolicyButton" layoutX="85.0" layoutY="74.0" mnemonicParsing="false" prefHeight="230.0" prefWidth="280.0" stylesheets="@style.css" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0" />
-		<Button id="ac-policy-button" fx:id="acPolicyButton" layoutX="457.0" layoutY="74.0" mnemonicParsing="false" prefHeight="230.0" prefWidth="280.0" stylesheets="@style.css" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0" />
-		<Button id="life-policy-button" fx:id="lifePolicyButton" layoutY="300.0" mnemonicParsing="false" prefHeight="230.0" prefWidth="280.0" stylesheets="@style.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" />
-		<Button id="travel-policy-button" fx:id="travelPolicyButton" layoutX="400.0" layoutY="300.0" mnemonicParsing="false" prefHeight="230.0" prefWidth="280.0" stylesheets="@style.css" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="50.0" />
+		<Button id="oc-policy-button" fx:id="ocPolicyButton" layoutX="85.0" layoutY="74.0" mnemonicParsing="false" prefHeight="195.0" prefWidth="237.0" stylesheets="@style.css" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0" />
+		<Button id="ac-policy-button" fx:id="acPolicyButton" layoutX="457.0" layoutY="74.0" mnemonicParsing="false" prefHeight="195.0" prefWidth="237.0" stylesheets="@style.css" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0" />
+		<Button id="life-policy-button" fx:id="lifePolicyButton" layoutY="300.0" mnemonicParsing="false" prefHeight="195.0" prefWidth="237.0" stylesheets="@style.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" />
+		<Button id="travel-policy-button" fx:id="travelPolicyButton" layoutX="400.0" layoutY="300.0" mnemonicParsing="false" prefHeight="195.0" prefWidth="237.0" stylesheets="@style.css" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="50.0" />
 	</children>
 </AnchorPane>

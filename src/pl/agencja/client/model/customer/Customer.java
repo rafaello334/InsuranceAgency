@@ -2,181 +2,116 @@ package pl.agencja.client.model.customer;
 
 import java.time.LocalDate;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleLongProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "CUSTOMERS")
 public class Customer
 {
-	private IntegerProperty idClient;
-	private StringProperty firstName;
-	private StringProperty lastName;
-	private IntegerProperty age;
-	private StringProperty country;
-	private StringProperty address;
-	private LongProperty phoneNumber;
-	private ObjectProperty<LocalDate> joinDate;
-	private ObjectProperty<LocalDate> birthDate;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "CUSTOMERID", nullable = false)
+	private int idCustomer;
 
-	public IntegerProperty idClientProperty()
-	{
-		return idClient;
-	}
+	@Column(name = "FIRSTNAME", nullable = false)
+	private String firstName;
 
-	public int getIdClient()
-	{
-		return idClient.get();
-	}
+	@Column(name = "LASTNAME", nullable = false)
+	private String lastName;
 
-	public void setIdClient(IntegerProperty idClient)
-	{
-		this.idClient = idClient;
-	}
+	@Column(name = "COUNTRY", nullable = false)
+	private String country;
 
-	public StringProperty firstNameProperty()
+	@Column(name = "ADDRESS", nullable = false)
+	private String address;
+
+	@Column(name = "PHONENUMBER", nullable = false)
+	private Long phoneNumber;
+
+	@Column(name = "JOINDATE", nullable = false)
+	private LocalDate joinDate;
+
+	@Column(name = "BIRTHDATE", nullable = false)
+	private LocalDate birthDate;
+
+	public int getIdCustomer()
 	{
-		return firstName;
+		return idCustomer;
 	}
 
 	public String getFirstName()
 	{
-		return firstName.get();
+		return firstName;
 	}
 
-	public void setFirstName(StringProperty firstName)
+	public void setFirstName(String firstName)
 	{
 		this.firstName = firstName;
 	}
 
-	public StringProperty lastNameProperty()
+	public String getLastName()
 	{
 		return lastName;
 	}
 
-	public void setLastName(StringProperty lastName)
+	public void setLastName(String lastName)
 	{
 		this.lastName = lastName;
 	}
 
-	public String getLastName()
-	{
-		return lastName.get();
-	}
-
-	public int getAge()
-	{
-		return age.get();
-	}
-
-	public void setAge(IntegerProperty age)
-	{
-		this.age = age;
-	}
-
-	public IntegerProperty ageProperty()
-	{
-		return age;
-	}
-
-	public StringProperty countryProperty()
+	public String getCountry()
 	{
 		return country;
 	}
 
-	public void setCountry(StringProperty country)
+	public void setCountry(String country)
 	{
 		this.country = country;
 	}
 
-	public String getCountry()
-	{
-		return country.get();
-	}
-
 	public String getAddress()
-	{
-		return address.get();
-	}
-
-	public void setAdress(StringProperty adress)
-	{
-		this.address = adress;
-	}
-
-	public StringProperty addressProperty()
 	{
 		return address;
 	}
 
+	public void setAddress(String address)
+	{
+		this.address = address;
+	}
+
 	public Long getPhoneNumber()
-	{
-		return phoneNumber.get();
-	}
-
-	public void setPhoneNumber(LongProperty phoneNumber)
-	{
-		this.phoneNumber = phoneNumber;
-	}
-
-	public LongProperty phoneNumberProperty()
 	{
 		return phoneNumber;
 	}
 
+	public void setPhoneNumber(Long phoneNumber)
+	{
+		this.phoneNumber = phoneNumber;
+	}
+
 	public LocalDate getJoinDate()
-	{
-		return joinDate.get();
-	}
-
-	public void setJoinDate(ObjectProperty<LocalDate> joinDate)
-	{
-		this.joinDate = joinDate;
-	}
-
-	public ObjectProperty<LocalDate> joinDateProperty()
 	{
 		return joinDate;
 	}
 
+	public void setJoinDate(LocalDate joinDate)
+	{
+		this.joinDate = joinDate;
+	}
+
 	public LocalDate getBirthDate()
-	{
-		return birthDate.get();
-	}
-
-	public void setBirthDate(ObjectProperty<LocalDate> birthDate)
-	{
-		this.birthDate = birthDate;
-	}
-
-	public ObjectProperty<LocalDate> birthDateProperty()
 	{
 		return birthDate;
 	}
 
-	public Customer(String firstName, String lastName, int age, String country, String adress, long phoneNumber,
-			LocalDate birthDate)
+	public void setBirthDate(LocalDate birthDate)
 	{
-		this.firstName = new SimpleStringProperty(firstName);
-		this.lastName = new SimpleStringProperty(lastName);
-		this.age = new SimpleIntegerProperty(age);
-		this.country = new SimpleStringProperty(country);
-		this.address = new SimpleStringProperty(adress);
-		this.phoneNumber = new SimpleLongProperty(phoneNumber);
-		this.birthDate = new SimpleObjectProperty<LocalDate>(birthDate);
-		this.joinDate = new SimpleObjectProperty<LocalDate>(LocalDate.now());
-	}
-
-	@Override
-	public String toString()
-	{
-		return "Imiê: " + firstName + "\nNazwisko:" + lastName + "\nWiek: " + age + "\nKraj: " + country + "\nAdres: "
-				+ address + "\nNumer Telefonu: " + phoneNumber + "\nData do³¹czenia: " + joinDate + "\nData urodzenia: "
-				+ birthDate + "]";
+		this.birthDate = birthDate;
 	}
 
 }

@@ -1,33 +1,51 @@
 package pl.agencja.client.model.policy;
 
-import java.util.Date;
+import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ACPOLICY")
 public class CarAcPolicy
 {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ACPOLICYID", nullable = false)
 	private int idCarAcPolicy;
-	private String carMar;
+
+	@Column(name = "MARK", nullable = false)
+	private String carMark;
+
+	@Column(name = "VALUE", nullable = false)
 	private int carValue;
-	private Date startPolicyDate;
-	private Date finishPolicyDate;
+
+	@Column(name = "PRODUCTIONYEAR", nullable = false)
+	private int productionYear;
+
+	@Column(name = "STARTPOLICY", nullable = false)
+	private LocalDate startPolicyDate;
+
+	@Column(name = "FINISHPOLICY", nullable = false)
+	private LocalDate finishPolicyDate;
 
 	public int getIdCarAcPolicy()
 	{
 		return idCarAcPolicy;
 	}
 
-	public void setIdCarAcPolicy(int idCarAcPolicy)
+	public String getCarMark()
 	{
-		this.idCarAcPolicy = idCarAcPolicy;
+		return carMark;
 	}
 
-	public String getCarMar()
+	public void setCarMark(String carMar)
 	{
-		return carMar;
-	}
-
-	public void setCarMar(String carMar)
-	{
-		this.carMar = carMar;
+		this.carMark = carMar;
 	}
 
 	public int getCarValue()
@@ -40,33 +58,35 @@ public class CarAcPolicy
 		this.carValue = carValue;
 	}
 
-	public Date getStartPolicyDate()
+	public LocalDate getStartPolicyDate()
 	{
 		return startPolicyDate;
 	}
 
-	public void setStartPolicyDate(Date startPolicyDate)
+	public void setStartPolicyDate(LocalDate startPolicyDate)
 	{
 		this.startPolicyDate = startPolicyDate;
 	}
 
-	public Date getFinishPolicyDate()
+	public LocalDate getFinishPolicyDate()
 	{
 		return finishPolicyDate;
 	}
 
-	public void setFinishPolicyDate(Date finishPolicyDate)
+	public void setFinishPolicyDate(LocalDate finishPolicyDate)
 	{
 		this.finishPolicyDate = finishPolicyDate;
 	}
 
-	public CarAcPolicy(int idCarAcPolicy, String carMar, int carValue, Date startPolicyDate, Date finishPolicyDate)
+	public int getProductionYear()
 	{
-		this.idCarAcPolicy = idCarAcPolicy;
-		this.carMar = carMar;
-		this.carValue = carValue;
-		this.startPolicyDate = startPolicyDate;
-		this.finishPolicyDate = finishPolicyDate;
+		return productionYear;
 	}
+
+	public void setProductionYear(int productionYear)
+	{
+		this.productionYear = productionYear;
+	}
+
 
 }

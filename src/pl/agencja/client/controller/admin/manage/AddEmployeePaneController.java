@@ -1,6 +1,7 @@
 package pl.agencja.client.controller.admin.manage;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -18,8 +19,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import pl.agencja.client.controller.EmployeesPaneController;
+import pl.agencja.client.database.HibernateUtil;
 import pl.agencja.client.model.customer.Employee;
-import pl.agencja.client.model.customer.EmployeeCollection;
 
 public class AddEmployeePaneController implements Initializable
 {
@@ -39,13 +40,7 @@ public class AddEmployeePaneController implements Initializable
 	private DatePicker birthDatePicker;
 
 	@FXML
-	private Label errorAgeLabel;
-
-	@FXML
 	private TextField firstNameTextField;
-
-	@FXML
-	private TextField ageTextField;
 
 	@FXML
 	private Label errorEmailAddressLabel;
@@ -90,7 +85,7 @@ public class AddEmployeePaneController implements Initializable
 
 	Employee employee;
 	boolean addClient;
-	boolean ageCorrect;
+	boolean emailAddressCorrect;
 	boolean firstNameCorrect;
 	boolean lastNameCorrect;
 	boolean userNameCorrect;
@@ -139,25 +134,13 @@ public class AddEmployeePaneController implements Initializable
 			@Override
 			public void handle(ActionEvent event)
 			{
-				ageCorrect = false;
 				addClient = false;
+				emailAddressCorrect = false;
 				firstNameCorrect = false;
 				lastNameCorrect = false;
 				userNameCorrect = false;
 				passwordCorrect = false;
 				repeatPasswordCorrect = false;
-
-				if (isNumeric(ageTextField.getText()))
-				{
-					ageCorrect = true;
-					errorAgeLabel.setText("");
-				} else if (ageTextField.getText().equals(""))
-				{
-					errorAgeLabel.setText("Podaj wiek!");
-				} else
-				{
-					errorAgeLabel.setText("Nieprawid³owa wartoœæ");
-				}
 
 				if (firstNameTextField.getText().equals(""))
 				{
@@ -189,6 +172,7 @@ public class AddEmployeePaneController implements Initializable
 					errorEmailAddressLabel.setText("Podaj adres!");
 				} else
 				{
+					emailAddressCorrect = true;
 					errorEmailAddressLabel.setText("");
 				}
 				if (birthDatePicker.getValue() == null)
@@ -227,20 +211,37 @@ public class AddEmployeePaneController implements Initializable
 					errorRepeatPasswordLabel.setText("");
 				}
 
-				if (ageCorrect && firstNameCorrect && lastNameCorrect && userNameCorrect && passwordCorrect
+				if (firstNameCorrect && lastNameCorrect && emailAddressCorrect && userNameCorrect && passwordCorrect
 						&& repeatPasswordCorrect)
 					addClient = true;
 
 				if (addClient
 						&& (!firstNameTextField.getText().isEmpty() && !lastNameTextField.getText().isEmpty()
-								&& !ageTextField.getText().isEmpty() && !emailAdressTextField.getText().isEmpty()
-								&& birthDatePicker.getValue() != null)
+								&& !emailAdressTextField.getText().isEmpty() && birthDatePicker.getValue() != null)
 						&& !userNameTextField.getText().isEmpty() && !passwordField.getText().isEmpty())
 				{
-					employee = new Employee(firstNameTextField.getText(), lastNameTextField.getText(),
-							Integer.parseInt(ageTextField.getText()), emailAdressTextField.getText(),
-							birthDatePicker.getValue(), userNameTextField.getText(), passwordField.getText(),
-							isAdminCheckBox.isSelected());
+
+					employee = new Employee();
+					employee.setFirstName(firstNameTextField.getText());
+					employee.setLastName(lastNameTextField.getText());
+					employee.setEmailAddress(emailAdressTextField.getText());
+					employee.setBirthDate(birthDatePicker.getValue());
+					employee.setAdmin(isAdminCheckBox.isSelected());
+					employee.setUserName(userNameTextField.getText());
+					employee.setPassword(passwordField.getText());
+					employee.setJoinDate(LocalDate.now());
+
+					if (employee.isAdmin())
+					{
+						employee.setAdministrator("Posiada");
+					} else
+					{
+						employee.setAdministrator("Nie posiada");
+					}
+
+					HibernateUtil.entityManager.getTransaction().begin();
+					HibernateUtil.entityManager.persist(employee);
+					HibernateUtil.entityManager.getTransaction().commit();
 
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Dodawanie pracownika");
@@ -248,12 +249,8 @@ public class AddEmployeePaneController implements Initializable
 					alert.setContentText("Dodanie pracownika zakoñczy³o siê sukcesem.\n");
 					alert.showAndWait();
 
-					EmployeeCollection.addEmployee(employee);
-					System.out.println(employee);
-					
 					firstNameTextField.setText("");
 					lastNameTextField.setText("");
-					ageTextField.setText("");
 					emailAdressTextField.setText("");
 					birthDatePicker.setValue(null);
 					userNameTextField.setText("");

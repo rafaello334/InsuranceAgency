@@ -10,6 +10,7 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import pl.agencja.client.controller.LoginPaneController;
+import pl.agencja.client.database.HibernateUtil;
 
 public class Client extends Application
 {
@@ -39,6 +40,7 @@ public class Client extends Application
 					if (response == ButtonType.OK)
 					{
 						Platform.exit();
+						HibernateUtil.close();
 					} else
 					{
 						we.consume();

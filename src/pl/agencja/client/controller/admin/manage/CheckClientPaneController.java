@@ -2,8 +2,10 @@ package pl.agencja.client.controller.admin.manage;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,14 +17,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import pl.agencja.client.controller.ClientsPaneController;
+import pl.agencja.client.database.HibernateUtil;
 import pl.agencja.client.model.customer.Customer;
-import pl.agencja.client.model.customer.CustomersCollection;
 
 public class CheckClientPaneController implements Initializable
 {
 	public static final String FIRST_NAME_COLUMN = "Imiê";
 	public static final String LAST_NAME_COLUMN = "Nazwisko";
-	public static final String AGE_COLUMN = "Wiek";
 	public static final String COUNTRY_COLUMN = "Kraj";
 	public static final String ADRESS_COLUMN = "Adres";
 	public static final String PHONE_NUMBER_COLUMN = "Numer Telefonu";
@@ -39,6 +40,7 @@ public class CheckClientPaneController implements Initializable
 	private Pane contentPane;
 
 	ClientsPaneController clientsPaneController;
+	ArrayList<Customer> customersList;
 
 	public void setContentPane(Pane contentPane)
 	{
@@ -90,9 +92,6 @@ public class CheckClientPaneController implements Initializable
 		TableColumn<Customer, String> lastNameColumn = new TableColumn<>(LAST_NAME_COLUMN);
 		lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
 
-		TableColumn<Customer, Integer> ageColumn = new TableColumn<>(AGE_COLUMN);
-		ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
-
 		TableColumn<Customer, String> countryColumn = new TableColumn<>(COUNTRY_COLUMN);
 		countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
 
@@ -110,7 +109,6 @@ public class CheckClientPaneController implements Initializable
 
 		clientsTableView.getColumns().add(firstNameColumn);
 		clientsTableView.getColumns().add(lastNameColumn);
-		clientsTableView.getColumns().add(ageColumn);
 		clientsTableView.getColumns().add(countryColumn);
 		clientsTableView.getColumns().add(adressColumn);
 		clientsTableView.getColumns().add(phoneNumberColumn);
@@ -119,8 +117,12 @@ public class CheckClientPaneController implements Initializable
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private void configureCollection()
 	{
-		clientsTableView.setItems(CustomersCollection.getCustomerList());
+		HibernateUtil.entityManager.getTransaction().begin();
+		customersList = (ArrayList<Customer>) HibernateUtil.entityManager.createQuery("from Customer").getResultList();
+		HibernateUtil.entityManager.getTransaction().commit();
+		clientsTableView.setItems(FXCollections.observableArrayList(customersList));
 	}
 }

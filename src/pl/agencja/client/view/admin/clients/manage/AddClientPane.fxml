@@ -16,18 +16,16 @@
       <Button id="back-button" fx:id="backAddClientButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
       <TextField fx:id="firstNameTextField" layoutX="400.0" layoutY="130.0" promptText="Imię" />
       <TextField fx:id="lastNameTextField" layoutX="400.0" layoutY="175.0" promptText="Nazwisko" />
-      <TextField fx:id="ageTextField" layoutX="400.0" layoutY="224.0" promptText="Wiek" />
-      <SplitMenuButton fx:id="countrySplitMenuButton" layoutX="400.0" layoutY="269.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="187.0" text="Kraj" />
-      <TextField fx:id="adressTextField" layoutX="400.0" layoutY="314.0" promptText="Adres zamieszkania" />
-      <TextField fx:id="phoneNumberTextField" layoutX="400.0" layoutY="361.0" promptText="Numer telefonu" />
-      <DatePicker fx:id="birthDatePicker" layoutX="400.0" layoutY="406.0" promptText="Data urodzenia" />
-      <Button fx:id="acceptButton" layoutX="436.0" layoutY="495.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="127.0" text="Dodaj" />
-      <Label fx:id="errorAgeLabel" layoutX="608.0" layoutY="229.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
-      <Label fx:id="errorCountryLabel" layoutX="608.0" layoutY="274.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
-      <Label fx:id="errorPhoneNumberLabel" layoutX="608.0" layoutY="366.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+      <SplitMenuButton fx:id="countrySplitMenuButton" layoutX="400.0" layoutY="221.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="187.0" text="Kraj" />
+      <TextField fx:id="adressTextField" layoutX="400.0" layoutY="267.0" promptText="Adres zamieszkania" />
+      <TextField fx:id="phoneNumberTextField" layoutX="400.0" layoutY="311.0" promptText="Numer telefonu" />
+      <DatePicker fx:id="birthDatePicker" layoutX="400.0" layoutY="360.0" promptText="Data urodzenia" />
+      <Button fx:id="acceptButton" layoutX="430.0" layoutY="422.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="127.0" text="Dodaj" />
+      <Label fx:id="errorCountryLabel" layoutX="608.0" layoutY="226.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+      <Label fx:id="errorPhoneNumberLabel" layoutX="601.0" layoutY="316.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
       <Label fx:id="errorFirstNameLabel" layoutX="608.0" layoutY="135.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
       <Label fx:id="errorLastNameLabel" layoutX="608.0" layoutY="175.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
-      <Label fx:id="errorAdressLabel" layoutX="608.0" layoutY="319.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
-      <Label fx:id="errorBirthDateLabel" layoutX="634.0" layoutY="411.0" prefHeight="21.0" prefWidth="171.0" textFill="RED" />
+      <Label fx:id="errorAdressLabel" layoutX="601.0" layoutY="272.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+      <Label fx:id="errorBirthDateLabel" layoutX="634.0" layoutY="365.0" prefHeight="21.0" prefWidth="171.0" textFill="RED" />
    </children>
 </AnchorPane>

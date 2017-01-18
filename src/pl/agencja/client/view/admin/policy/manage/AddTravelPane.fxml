@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css"
-	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-	<children>
-		<Button id="back-button" fx:id="backAddTravelButton"
-			layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="100.0"
-			prefWidth="100.0" />
-	</children>
+<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="208.0" layoutY="27.0" prefHeight="75.0" prefWidth="572.0" text="Nowe Ubezpieczenie Podrózy" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </Label>
+      <Button id="back-button" fx:id="backAddTravelButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+      <TextField fx:id="destinationTextField" layoutX="400.0" layoutY="130.0" promptText="Miejsce podróży" />
+      <TextField fx:id="valueTextField" layoutX="400.0" layoutY="175.0" promptText="Kwota" />
+      <DatePicker fx:id="finishInsuranceDatePicker" layoutX="400.0" layoutY="226.0" promptText="Data zakończenia polisy" />
+      <Label fx:id="errorDestinationLabel" layoutX="608.0" layoutY="135.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+      <Label fx:id="errorValueLabel" layoutX="608.0" layoutY="175.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+      <Label fx:id="errorFinishInsuranceLabel" layoutX="624.0" layoutY="231.0" prefHeight="21.0" prefWidth="171.0" textFill="RED" />
+      <Button fx:id="acceptButton" layoutX="430.0" layoutY="285.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="127.0" text="Dodaj" />
+	 <Button id="check-policy-button" fx:id="checkPolicyButton" layoutX="68.0" layoutY="323.0" mnemonicParsing="false" prefHeight="183.0" prefWidth="205.0" stylesheets="@style.css" AnchorPane.bottomAnchor="94.0" AnchorPane.rightAnchor="527.0" />
+
+   </children>
 </AnchorPane>

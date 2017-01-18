@@ -68,25 +68,25 @@
 #oc-policy-button
 {
 	-fx-background-image: url("/pl/agencja/client/resources/ocpolicy.jpg");
-
+	-fx-background-size: cover;
 }
 
 #ac-policy-button
 {
 	-fx-background-image: url("/pl/agencja/client/resources/acpolicy.jpg");
-
+	-fx-background-size: cover;
 }
 
 #life-policy-button
 {
 	-fx-background-image: url("/pl/agencja/client/resources/lifepolicy.jpg");
-
+	-fx-background-size: cover;
 }
 
 #travel-policy-button
 {
 	-fx-background-image: url("/pl/agencja/client/resources/travelpolicy.jpg");
-
+	-fx-background-size: cover;
 }
 
 /* Graphics for ClientsPane */

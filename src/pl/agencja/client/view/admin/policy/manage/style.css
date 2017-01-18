@@ -3,3 +3,37 @@
 	-fx-background-image: url("/pl/agencja/client/resources/back.png");
 	-fx-background-color: transparent;
 }
+
+#check-ac-button
+{
+	-fx-background-image: url("/pl/agencja/client/resources/check.png");
+	-fx-background-color: transparent;
+	-fx-background-size: cover;
+}
+
+#check-oc-button
+{
+	-fx-background-image: url("/pl/agencja/client/resources/check.png");
+	-fx-background-color: transparent;
+	-fx-background-size: cover;
+}
+
+#check-travel-button
+{
+	-fx-background-image: url("/pl/agencja/client/resources/check.png");
+	-fx-background-color: transparent;
+	-fx-background-size: cover;
+}
+
+#check-life-button
+{
+	-fx-background-image: url("/pl/agencja/client/resources/check.png");
+	-fx-background-color: transparent;
+	-fx-background-size: cover;
+}
+#check-policy-button
+{
+	-fx-background-image: url("/pl/agencja/client/resources/check.png");
+	-fx-background-color: transparent;
+	-fx-background-size: cover;
+}

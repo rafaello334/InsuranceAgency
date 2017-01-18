@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -7,6 +8,22 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
+      <Label fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="254.0" layoutY="27.0" prefHeight="75.0" prefWidth="479.0" text="Nowe Ubezpieczenie OC" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </Label>
       <Button id="back-button" fx:id="backAddOcButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+      <TextField fx:id="markTextField" layoutX="400.0" layoutY="130.0" promptText="Marka" />
+      <TextField fx:id="valueTextField" layoutX="400.0" layoutY="175.0" promptText="Wartość" />
+      <TextField fx:id="productionYearTextField" layoutX="400.0" layoutY="224.0" promptText="Rok Produkcji" />
+      <DatePicker fx:id="finishInsuranceDatePicker" layoutX="400.0" layoutY="280.0" promptText="Data zakończenia polisy" />
+      <Button fx:id="acceptButton" layoutX="437.0" layoutY="357.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="127.0" text="Dodaj" />
+      <Label fx:id="errorMarkLabel" layoutX="608.0" layoutY="135.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+      <Label fx:id="errorValueLabel" layoutX="608.0" layoutY="175.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+      <Label fx:id="errorProductionYearLabel" layoutX="608.0" layoutY="229.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+      <Label fx:id="errorFinishInsuranceLabel" layoutX="624.0" layoutY="285.0" prefHeight="21.0" prefWidth="171.0" textFill="RED" />
+   	 <Button id="check-policy-button" fx:id="checkPolicyButton" layoutX="68.0" layoutY="323.0" mnemonicParsing="false" prefHeight="183.0" prefWidth="205.0" stylesheets="@style.css" AnchorPane.bottomAnchor="94.0" AnchorPane.rightAnchor="527.0" />
+   
    </children>
 </AnchorPane>
